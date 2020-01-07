@@ -576,6 +576,16 @@ public class RedisUtil {
     }
 
     /**
+     * 阻塞从消息队列左侧取数据
+     *
+     * @param key
+     * @return
+     */
+    public Object leftPop(Object key, long timeout, TimeUnit unit) {
+        return redisTemplate.opsForList().leftPop(key, timeout, unit);
+    }
+
+    /**
      * 从消息队列右侧取数据
      *
      * @param key
@@ -585,6 +595,15 @@ public class RedisUtil {
         return redisTemplate.opsForList().rightPop(key);
     }
 
+    /**
+     * 阻塞从消息队列右侧取数据
+     *
+     * @param key
+     * @return
+     */
+    public Object rightPop(Object key, long timeout, TimeUnit unit) {
+        return redisTemplate.opsForList().rightPop(key, timeout, unit);
+    }
     /**
      * 从右侧开始插入数据
      *

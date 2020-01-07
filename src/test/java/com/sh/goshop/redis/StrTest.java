@@ -26,8 +26,8 @@ public class StrTest {
     public void bigdec() {
         double d = 100.0006;
         BigDecimal b = new BigDecimal(d);
-        b.setScale(2);
-        b = b.setScale(3, BigDecimal.ROUND_HALF_UP);
+//        b.setScale(2);
+        b = b.setScale(2, BigDecimal.ROUND_HALF_UP);
         System.out.println(b);
     }
 

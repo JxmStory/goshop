@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sh.goshop.dao.GoodsDao" >
+
+    <select id="get" parameterType="Integer" resultType="goods">
+        SELECT * FROM t_goods WHERE id = #{id}
+    </select>
+
+    <update id="update" parameterType="goods">
+        UPDATE t_goods SET content = #{content} WHERE id = #{id}
+    </update>
+
+    <select id="list" resultType="goods">
+        SELECT * FROM t_goods
+    </select>
+
+    <insert id="add" parameterType="goods" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_goods (name,content) value (#{name},#{content})
+    </insert>
+</mapper>

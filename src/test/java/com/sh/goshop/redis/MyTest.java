@@ -1,11 +1,9 @@
 package com.sh.goshop.redis;
 
 import com.sh.goshop.entity.Abc;
+import com.sh.goshop.entity.Goods;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,19 +13,17 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @SpringBootTest
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
 public class MyTest {
 
     @Test
-    public void teset() {
+    public void t() {
         List<String> list = Arrays.asList("a","b","","d","e");
         List<String> strs = list.stream().filter(str -> !str.isEmpty()).collect(toList());
         System.out.println(strs);
     }
 
     @Test
-    public void ttt() {
+    public void tt() {
         List<Abc> list = new ArrayList<>();
         list.add(new Abc(1, "shh", "123"));
         list.add(new Abc(1, "chh", "123"));
@@ -42,5 +38,22 @@ public class MyTest {
         while (iterator.hasNext()) {
             System.out.println(iterator.next().getUsername());
         }
+    }
+
+    @Test
+    public void ttt() {
+        Goods goods = new Goods();
+        goods.setName("jxm");
+        String name = "SSS";
+        System.out.println(goods.getName());
+        System.out.println(name);
+        change(goods, name);
+        System.out.println(goods.getName());
+        System.out.println(name);
+    }
+
+    public void change(Goods goods, String name) {
+        goods.setName(goods.getName() + "!");
+        name = name + "!";
     }
 }

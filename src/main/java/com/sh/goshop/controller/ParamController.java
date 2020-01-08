@@ -49,11 +49,15 @@ public class ParamController {
     }
 
     @PostMapping("list")
-    public String postList(User user) {
+    public String postList(@RequestBody User user) {
         List<String> list = user.getList();
         Iterator<String> iterator = list.iterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
+        }
+        String[] label = user.getLabel();
+        for (int i = 0; i < label.length; i++) {
+            System.out.println(label[i]);
         }
         return "success";
     }

@@ -12,6 +12,8 @@ public class User {
 
     private static String name;
 
+    private String[] label;
+
     private List<String> list;
 
     public User() {}
@@ -27,6 +29,14 @@ public class User {
     @Value("${jxm.name}")
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String[] getLabel() {
+        return label;
+    }
+
+    public void setLabel(String[] label) {
+        this.label = label;
     }
 
     public List<String> getList() {

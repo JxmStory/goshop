@@ -5,10 +5,8 @@ import com.sh.goshop.entity.Goods;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.stream.Collectors.toList;
 
@@ -55,5 +53,45 @@ public class MyTest {
     public void change(Goods goods, String name) {
         goods.setName(goods.getName() + "!");
         name = name + "!";
+    }
+
+
+    /**
+     * java.util 包的集合类就都是快速失败
+     * 迭代器在遍历时直接访问集合中的内容，增加或删除元素时都会修改modCount变量，
+     * 并抛出ConcurrentModificationException 异常
+     */
+    @Test
+    public void failFast() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("1", "11");
+        map.put("2", "22");
+        map.put("3", "33");
+        Iterator iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+            map.put("2", "222");    // 不抛异常
+            map.put("5", "55");     // 抛异常
+        }
+    }
+
+
+    /**
+     * java.util.concurrent 包下的类都是安全失败
+     * 采用安全失败机制的集合容器，在遍历时不是直接在集合内容上访问的，
+     * 而是先复制原有集合内容，在拷贝的集合上进行遍历。
+     */
+    @Test
+    public void failSafe() {
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+        map.put("1", "11");
+        map.put("2", "22");
+        map.put("3", "33");
+        Iterator iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+            map.put("2", "222");    // 不抛异常
+            map.put("5", "55");     // 不抛异常
+        }
     }
 }

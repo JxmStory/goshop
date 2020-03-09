@@ -8,6 +8,10 @@
         SELECT * FROM t_goods WHERE id = #{id}
     </select>
 
+    <select id="getByName" parameterType="String" resultType="goods">
+        SELECT * FROM t_goods WHERE name = #{name}
+    </select>
+
     <update id="update" parameterType="goods">
         UPDATE t_goods SET content = #{content} WHERE id = #{id}
     </update>

@@ -10,6 +10,8 @@ public interface GoodsDao {
 
     Goods get(Integer id);
 
+    Goods getByName(String name);
+
     List list();
 
     void add(Goods goods);

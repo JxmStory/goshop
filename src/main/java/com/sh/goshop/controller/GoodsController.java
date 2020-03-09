@@ -37,4 +37,18 @@ public class GoodsController {
         goods.forEach(good -> redisUtil.rightPush("goods", good));
         return "success";
     }
+
+
+    @GetMapping("addOrUpdate")
+    public String addOrUpdate(Goods goods) {
+        System.out.println(goods.getName()+ "" + goods.getContent());
+        goodsService.addOrUpdate(goods);
+        return "success";
+    }
+
+    @GetMapping("insert")
+    public String insert(Goods goods) {
+        System.out.println(goods.getName()+ "" + goods.getContent());
+        return goodsService.insert(goods);
+    }
 }

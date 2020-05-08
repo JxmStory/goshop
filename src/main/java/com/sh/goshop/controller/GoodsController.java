@@ -5,6 +5,7 @@ import com.sh.goshop.entity.Goods;
 import com.sh.goshop.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ public class GoodsController {
     private RedisUtil redisUtil;
 
     @GetMapping("add")
-    public String add(Goods goods) {
+    public String add(@RequestBody Goods goods) {
         goodsService.add(goods);
         return "success";
     }
@@ -40,15 +41,22 @@ public class GoodsController {
 
 
     @GetMapping("addOrUpdate")
-    public String addOrUpdate(Goods goods) {
+    public String addOrUpdate(@RequestBody Goods goods) {
         System.out.println(goods.getName()+ "" + goods.getContent());
-        goodsService.addOrUpdate(goods);
+        goodsService.add2(goods);
         return "success";
     }
 
     @GetMapping("insert")
-    public String insert(Goods goods) {
+    public String insert(@RequestBody Goods goods) {
         System.out.println(goods.getName()+ "" + goods.getContent());
-        return goodsService.insert(goods);
+        return goodsService.add4(goods);
+    }
+
+    @GetMapping("updateLock")
+    public String updateLock(@RequestBody Goods goods) {
+        System.out.println(goods.getName()+ "" + goods.getContent());
+        goodsService.add6(goods);
+        return "success";
     }
 }

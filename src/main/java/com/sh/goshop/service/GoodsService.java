@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class GoodsService {
@@ -28,7 +30,7 @@ public class GoodsService {
      * 依然可以同时读到数据库记录为空
      */
     @Transactional
-    public void update(Goods goods) {
+    public void add1(Goods goods) {
         Goods gd = goodsDao.getByName(goods.getName());
         if (gd == null) {
             goodsDao.add(goods);
@@ -41,7 +43,21 @@ public class GoodsService {
      * 注意：@Transactional注解会使synchronize失效
      *      集群下synchronize也会失效 synchronize只针对本地jvm
      */
-    public synchronized void addOrUpdate(Goods goods) {
+    public synchronized void add2(Goods goods) {
+        Goods gd = goodsDao.getByName(goods.getName());
+        if (gd == null) {
+            goodsDao.add(goods);
+        }
+    }
+
+    /**
+     * 注意：@Transactional注解会使synchronize失效
+     * 原因是当一个线程执行完该方法并释放锁后，代理类可能还没有提交事务
+     * 其他线程拿到锁后也执行getByName 结果为null
+     * 集群下synchronize也会失效 synchronize只针对本地jvm
+     */
+    @Transactional
+    public synchronized void add3(Goods goods) {
         Goods gd = goodsDao.getByName(goods.getName());
         if (gd == null) {
             goodsDao.add(goods);
@@ -52,7 +68,7 @@ public class GoodsService {
      * 使用信号量
      */
     Semaphore semaphore = new Semaphore(1);  //定义资源的总数量
-    public String insert(Goods goods) {
+    public String add4(Goods goods) {
         int availablePermits = semaphore.availablePermits();//可用资源数
         if(availablePermits>0){
             System.out.println("抢到资源");
@@ -73,5 +89,48 @@ public class GoodsService {
             semaphore.release(1);//释放一个资源
         }
         return "Success";
+    }
+
+    /**
+     * 使用lock锁
+     * 注意：此方法为错误示例
+     * lock不能为局部变量 不然每次进入这个方法都会创建不同的lock对象
+     */
+    public void add5(Goods goods) {
+        Lock lock = new ReentrantLock();    // lock应为类的属性
+        lock.lock();
+        try {
+            Goods gd = goodsDao.getByName(goods.getName());
+            if (gd == null) {
+                goodsDao.add(goods);
+            }
+        } catch (Exception e) {
+
+        } finally {
+            lock.unlock();
+        }
+
+    }
+
+
+    /**
+     * 使用lock锁
+     * 注意：创建Lock对象应放到方法外面
+     *
+     */
+    private Lock lock = new ReentrantLock();
+    public void add6(Goods goods) {
+        lock.lock();
+        try {
+            Goods gd = goodsDao.getByName(goods.getName());
+            if (gd == null) {
+                goodsDao.add(goods);
+            }
+        } catch (Exception e) {
+
+        } finally {
+            lock.unlock();
+        }
+
     }
 }

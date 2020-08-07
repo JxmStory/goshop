@@ -2,6 +2,7 @@ package com.sh.goshop.redis;
 
 import com.sh.goshop.common.RedisUtil;
 import com.sh.goshop.entity.Abc;
+import com.sh.goshop.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,15 @@ public class RedisTest {
         while (i.hasNext()) {
             System.out.println(i.next());
         }
+    }
+
+    @Test
+    public void setList() {
+        User user = new User();
+        user.setName("mico");
+        List<Object> list = new ArrayList<>();
+        list.add(user);
+        list.add(user);
+        redisUtil.rightPush("users", list);
     }
 }

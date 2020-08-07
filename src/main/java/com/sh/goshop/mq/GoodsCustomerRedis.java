@@ -29,8 +29,8 @@ public class GoodsCustomerRedis implements ApplicationRunner {
             if (goods != null) {
                 System.out.println(goods.getName() + "---" + goods.getContent());
             } else {
-                System.out.println("No data sleep 10s");
-                Thread.sleep(10000);
+                System.out.println("No data sleep 10 minute");
+                Thread.sleep(10*60*1000);
             }
         }
     }

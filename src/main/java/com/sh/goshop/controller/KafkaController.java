@@ -1,13 +1,10 @@
 package com.sh.goshop.controller;
 
-import com.alibaba.rocketmq.client.exception.MQClientException;
 import com.sh.goshop.kafka.MyKafkaProducer;
-import com.sh.goshop.mq.MqProd;
-import org.apache.kafka.clients.producer.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/kfk/")

@@ -32,7 +32,6 @@ public class MyKafkaConsumer {
         }
     }
 
-
     @KafkaListener(topics = "notice_topic_2")
     public void listenTopicTwo(ConsumerRecord<?, ?> record, Acknowledgment ack) {
         ack.acknowledge();

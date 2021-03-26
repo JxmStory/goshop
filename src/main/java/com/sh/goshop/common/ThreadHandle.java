@@ -6,6 +6,11 @@ import javax.annotation.PreDestroy;
 import java.util.Map;
 import java.util.concurrent.*;
 
+/**
+ *  线程池提交任务
+ *  @author micomo
+ *  @date 2021/3/26 18:55
+ */
 @Component
 public class ThreadHandle {
 

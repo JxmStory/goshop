@@ -1,11 +1,15 @@
 package com.sh.goshop.controller;
 
 import com.sh.goshop.common.RedisUtil;
+import com.sh.goshop.common.ThreadHandle;
+import com.sh.goshop.thread.MyTaskThread;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
 import java.util.Random;
 
 @RequestMapping("/shop/")
@@ -14,6 +18,8 @@ public class ShopController {
 
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private ThreadHandle threadHandle;
 
     @PostMapping("goods")
     public String goods() {
@@ -44,4 +50,10 @@ public class ShopController {
             return "库存不足";
         }
     }
+
+    @GetMapping("handle")
+    public Map<String, Object> handle(Integer a, String b) {
+       return threadHandle.handle(new MyTaskThread(a, b));
+    }
+
 }

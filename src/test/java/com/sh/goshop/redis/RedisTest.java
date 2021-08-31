@@ -42,6 +42,8 @@ public class RedisTest {
         if (redisUtil.get("study") == null) {
             System.out.println("aaa");
         }
+        abc = (Abc) redisUtil.get("study");
+        System.out.println(abc.getUsername());
     }
 
 

@@ -46,7 +46,6 @@ public class RedisTest {
         System.out.println(abc.getUsername());
     }
 
-
     @Test
     public void test1() {
         List list = new ArrayList();
